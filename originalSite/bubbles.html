@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title>Bubbles</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<style>
+		ul{
+
+		}
+		li{
+			display: inline;
+			color: yellow;
+		}
+		a{
+			color: yellow;
+		}
+		html,
+		body {
+			height: 100%;
+		}
+
+		body {
+			background: #09f;
+			background-image: -moz-linear-gradient(bottom, #0099ff, #45d1ff);
+			background-image: -webkit-linear-gradient(bottom, #0099ff, #45d1ff);
+			background-image: linear-gradient(to top, #0099ff, #45d1ff);
+		}
+
+		.bubble-toggle {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			padding: 10px;
+			background: rgba(255, 255, 255, 0.5);
+			font-family: sans-serif;
+			font-size: 13px;
+			color: #333;
+		}
+		.bubble-toggle:hover {
+			background: rgba(255, 255, 255, 0.75);
+		}
+
+		.bubbles {
+			position: relative;
+			overflow: hidden;
+			width: 100%;
+			height: 100%;
+			margin: 0 auto;
+		}
+
+		.bubble-container {
+			position: absolute;
+			bottom: 0;
+			-webkit-animation: bubblerise 4s infinite ease-in;
+			-moz-animation: bubblerise 4s infinite ease-in;
+			-ms-animation: bubblerise 4s infinite ease-in;
+			animation: bubblerise 4s infinite ease-in;
+			filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+			opacity: 0;
+		}
+
+		.bubble {
+			width: 6px;
+			height: 6px;
+			margin: 0 auto;
+			border: 1px solid rgba(255, 255, 255, 0.5);
+			background: rgba(255, 255, 255, 0.25);
+			-moz-border-radius: 10px;
+			-webkit-border-radius: 10px;
+			border-radius: 10px;
+			-webkit-animation: bubblewobble 0.4s infinite linear;
+			-moz-animation: bubblewobble 0.4s infinite linear;
+			-ms-animation: bubblewobble 0.4s infinite linear;
+			animation: bubblewobble 0.4s infinite linear;
+		}
+
+		@-webkit-keyframes bubblerise {
+			0% {
+				bottom: 0;
+				filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+				opacity: 0;
+			}
+			5% {
+				bottom: 0;
+				filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+				opacity: 1;
+			}
+			99% {
+				filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+				opacity: 1;
+			}
+			100% {
+				bottom: 100%;
+				filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+				opacity: 0;
+			}
+		}
+		@-moz-keyframes bubblerise {
+			0% {
+				bottom: 0;
+				filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+				opacity: 0;
+			}
+			5% {
+				bottom: 0;
+				filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+				opacity: 1;
+			}
+			99% {
+				filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+				opacity: 1;
+			}
+			100% {
+				bottom: 100%;
+				filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+				opacity: 0;
+			}
+		}
+		@-ms-keyframes bubblerise {
+			0% {
+				bottom: 0;
+				filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+				opacity: 0;
+			}
+			5% {
+				bottom: 0;
+				filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+				opacity: 1;
+			}
+			99% {
+				filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+				opacity: 1;
+			}
+			100% {
+				bottom: 100%;
+				filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+				opacity: 0;
+			}
+		}
+		@keyframes bubblerise {
+			0% {
+				bottom: 0;
+				filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+				opacity: 0;
+			}
+			5% {
+				bottom: 0;
+				filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+				opacity: 1;
+			}
+			99% {
+				filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+				opacity: 1;
+			}
+			100% {
+				bottom: 100%;
+				filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+				opacity: 0;
+			}
+		}
+		@-webkit-keyframes bubblewobble {
+			0% {
+				margin-left: 0;
+			}
+			50% {
+				margin-left: 2px;
+			}
+		}
+		@-moz-keyframes bubblewobble {
+			0% {
+				margin-left: 0;
+			}
+			50% {
+				margin-left: 2px;
+			}
+		}
+		@-ms-keyframes bubblewobble {
+			0% {
+				margin-left: 0;
+			}
+			50% {
+				margin-left: 2px;
+			}
+		}
+		@keyframes bubblewobble {
+			0% {
+				margin-left: 0;
+			}
+			50% {
+				margin-left: 2px;
+			}
+		}
+
+	</style>
+</head>
+<body>
+<ul>
+	<li><a href="original.html">Home</a></li>
+	<li> | </li>
+	<li><a href="http://codepen.io/bh/pen/JBlCc">Source Code</a></li>
+</ul>
+	<div class="bubbles"></div>
+	<a class="bubble-toggle" href="#">Bubbles Off</a>
+	<script>
+		var $bubbles = $('.bubbles');
+
+		function bubbles() {
+
+			// Settings
+			var min_bubble_count = 20, // Minimum number of bubbles
+				max_bubble_count = 40, // Maximum number of bubbles
+				min_bubble_size = 3, // Smallest possible bubble diameter (px)
+				max_bubble_size = 8; // Largest possible bubble diameter (px)
+
+			// Calculate a random number of bubbles based on our min/max
+			var bubbleCount = min_bubble_count + Math.floor(Math.random() * (max_bubble_count + 1));
+
+			// Create the bubbles
+			for (var i = 0; i < bubbleCount; i++) {
+				$bubbles.append('<div class="bubble-container"><div class="bubble"></div></div>');
+			}
+
+			// Now randomise the various bubble elements
+			$bubbles.find('.bubble-container').each(function(){
+
+				// Randomise the bubble positions (0 - 100%)
+				var pos_rand = Math.floor(Math.random() * 101);
+
+				// Randomise their size
+				var size_rand = min_bubble_size + Math.floor(Math.random() * (max_bubble_size + 1));
+
+				// Randomise the time they start rising (0-15s)
+				var delay_rand = Math.floor(Math.random() * 16);
+
+				// Randomise their speed (3-8s)
+				var speed_rand = 3 + Math.floor(Math.random() * 9);
+
+				// Cache the this selector
+				var $this = $(this);
+
+				// Apply the new styles
+				$this.css({
+					'left' : pos_rand + '%',
+
+					'-webkit-animation-duration' : speed_rand + 's',
+					'-moz-animation-duration' : speed_rand + 's',
+					'-ms-animation-duration' : speed_rand + 's',
+					'animation-duration' : speed_rand + 's',
+
+					'-webkit-animation-delay' : delay_rand + 's',
+					'-moz-animation-delay' : delay_rand + 's',
+					'-ms-animation-delay' : delay_rand + 's',
+					'animation-delay' : delay_rand + 's'
+				});
+
+				$this.children('.bubble').css({
+					'width' : size_rand + 'px',
+					'height' : size_rand + 'px'
+				});
+
+			});
+		}
+
+		// In case users value their laptop battery life
+		// Allow them to turn the bubbles off
+		$('.bubble-toggle').click(function(){
+			if($bubbles.is(':empty')) {
+				bubbles();
+				$bubbles.show();
+				$(this).text('Bubbles Off');
+			} else {
+				$bubbles.fadeOut(function(){
+					$(this).empty();
+				});
+				$(this).text('Bubbles On');
+			}
+
+			return false;
+		});
+
+		bubbles();
+	</script>
+
+</body>
+</html>
