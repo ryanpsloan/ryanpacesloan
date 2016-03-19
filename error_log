@@ -1,0 +1,18 @@
+[24-Nov-2014 05:19:55 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/ryanpace/public_html/contact.php on line 16
+[24-Nov-2014 05:29:28 UTC] PHP Parse error:  syntax error, unexpected '$output' (T_VARIABLE) in /home/ryanpace/public_html/contact.php on line 15
+[24-Nov-2014 05:33:56 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/ryanpace/public_html/contact.php on line 15
+[24-Nov-2014 06:25:26 UTC] PHP Fatal error:  Uncaught exception 'RuntimeException' with message 'Invalid city detected' in /home/ryanpace/public_html/location.php:31
+Stack trace:
+#0 {main}
+  thrown in /home/ryanpace/public_html/location.php on line 31
+[24-Nov-2014 06:25:52 UTC] PHP Parse error:  syntax error, unexpected '*' in /home/ryanpace/public_html/location.php on line 81
+[24-Nov-2014 06:25:55 UTC] PHP Parse error:  syntax error, unexpected '*' in /home/ryanpace/public_html/location.php on line 81
+[30-Nov-2014 05:56:31 UTC] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/ryanpace/public_html/contact.php on line 32
+[07-Dec-2014 19:32:28 UTC] PHP Warning:  DOMDocument::loadXML(): Empty string supplied as input in /home/ryanpace/public_html/test.php on line 18
+[07-Dec-2014 19:32:28 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ryanpace/public_html/test.php on line 22
+[07-Dec-2014 19:35:01 UTC] PHP Warning:  DOMDocument::loadXML(): Empty string supplied as input in /home/ryanpace/public_html/test.php on line 18
+[07-Dec-2014 19:35:01 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ryanpace/public_html/test.php on line 22
+[07-Dec-2014 19:35:06 UTC] PHP Warning:  DOMDocument::loadXML(): Empty string supplied as input in /home/ryanpace/public_html/test.php on line 18
+[07-Dec-2014 19:35:06 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ryanpace/public_html/test.php on line 22
+[07-Dec-2014 19:35:36 UTC] PHP Warning:  DOMDocument::loadXML(): Empty string supplied as input in /home/ryanpace/public_html/test.php on line 18
+[07-Dec-2014 19:35:36 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/ryanpace/public_html/test.php on line 22
