@@ -1,74 +1,57 @@
-<?php
-
-require_once('vendor/autoload.php');
-
-\Stripe\Stripe::setApiKey("sk_test_dwnEFDV6sFvgYB6vmbDJlJHX");
-
-// Get the credit card details submitted by the form
-$token = $_POST['stripeToken'];
-
-// Create the charge on Stripe's servers - this will charge the user's card
-try {
-    $charge = \Stripe\Charge::create(array(
-        "amount" => 1000, // amount in cents, again
-        "currency" => "usd",
-        "source" => $token,
-        "description" => "Example charge"
-    ));
-} catch(\Stripe\Error\Card $e) {
-    // The card has been declined
-}
-
-
-
-
-
-
-
-
-
-
-
-
-?>
 <!DOCTYPE html>
+<html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Ryan Pace Sloan</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Payment</title>
+    <link type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.12.0/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.12.0/additional-methods.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
+    <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+    <script type="text/javascript">
+        //Stripe.setPublishableKey('pk_live_GaUAeZIimAN1U7bD0rpvqfVN');
+    </script>
+    <script>
+        $(document).ready(function(){
+            var input = $("input[type='number']");
+            $("button[class='stripe-button-el']").prop('disabled', true);
+            input.change(function(){
+                $("button[class='stripe-button-el']").prop('disabled', false);
+                input.validate({
+                    debug: true,
+                    rules: {
+                        amount: {
+                            required: true,
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+                            messages: {
+                                required: "Required Input"
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+                            }
+                        }
+                    },
+                    success: function(element){
+                        alert("A");
 
+                    }
+
+                });
+            });
+        });
+    </script>
     <style>
-        body {
-
-        }
-        .panel-body{
-            font-size: 1.7em;
-            background-image: radial-gradient(#888888, #ffffff);
-
-        }
-        .btn-group-vertical{
-            position: absolute;
-            top: 15%;
-            right: 2%;
-        }
-        .btn{
-            padding: 1em;
-            margin-top: .5em;
-        }
-        .icon-list{
-            padding: 1em;
-            margin-top: 1em;
+        table td{
+            padding: 3px;
         }
     </style>
+
+
 </head>
+
 <body>
 <header>
     <nav class="navbar navbar-default" role="navigation">
@@ -81,49 +64,50 @@ try {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="# "><span class="glyphicon glyphicon-cloud"
-                                                        aria-hidden="true"></span> Ryan Pace Sloan</a>
+                <a class="navbar-brand" href="../index.php"><span class="glyphicon glyphicon-star"
+                                                                  aria-hidden="true"></span>Ryan Pace Sloan</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li></li>
-                    <li><a href="#"></a></li>
-                    <li></li>
-                    <li></li>
-                    <li><form action="" method="POST">
-                            <script
-                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key="pk_test_GbvEJe8uyD3WdzptAvnBUoC2"
-                                data-amount="2000"
-                                data-name="Demo Site"
-                                data-description="2 widgets ($20.00)"
-                                data-image="/128x128.png"
-                                data-locale="auto">
-                            </script>
-                        </form></li>
-
-
-
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="disabled"> </li>
-
-                    <li></li>
+                    <li class="disabled"></li>
+                    <li class="active"></li>
+                    <li><a href="#"></a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
 </header>
 <main>
-    <article>
+<div id="payment-errors"></div>
 
-    </article>
+<!-- get amount & description from the tickets created -->
+<form action="charge.php" method="POST">
+<table>
+    <tr><td><label for="amount">Amount to Pay $</label></td><td><input type="number" name="amount" id="amount"></td>
+        <td>
+
+                <script
+                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_live_GaUAeZIimAN1U7bD0rpvqfVN"
+                    data-amount= ""
+                    data-name="Ryan Pace Sloan"
+                    data-description="Website"
+                    data-image="images/ryanpaceformal.jpg">
+                </script>
+
+        </td>
+    </tr>
+</table>
+</form>
+<div>
+    <?php isset($_GET['output']) ? $_GET['output'] : "" ?>
+</div>
 </main>
-<footer>
-
-</footer>
 </body>
 </html>

@@ -16,7 +16,7 @@
 	<style>
 		body {
 			background-image: url('images/bg-code.jpg');
-			background-repeat: no-repeat;
+			background-repeat: repeat-y;
 
 		}
 		.panel-body{
